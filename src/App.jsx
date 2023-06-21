@@ -12,36 +12,36 @@ const systemMessage = { //  Explain things like you're talking to a software pro
 function App() {
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm notChatGPT! Ask me anything!",
+      message: "Hello, I am notChatGPT! Ask me anything!",
       sentTime: "just now",
       sender: "ChatGPT"
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
-
   const handleSend = async (message) => {
     const newMessage = {
       message,
       direction: 'outgoing',
       sender: "user"
     };
-
     const newMessages = [...messages, newMessage];
-    
     setMessages(newMessages);
 
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
     setIsTyping(true);
+    //everything before this doesn't need to change!!!the only things we want to change is anything connected to the openai api and redirect it to our own api.
     await processMessageToChatGPT(newMessages);
   };
 
+
+  
   async function processMessageToChatGPT(chatMessages) { // messages is an array of messages
     // Format messages for chatGPT API
     // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
     // So we need to reformat
 
-    let apiMessages = chatMessages.map((messageObject) => {
+    let apiMessages = chatMessages.map((messageObject) => {//loops over every single chat message and creates a new message object
       let role = "";
       if (messageObject.sender === "ChatGPT") {
         role = "assistant";
